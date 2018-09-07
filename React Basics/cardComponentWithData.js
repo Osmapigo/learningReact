@@ -1,37 +1,50 @@
 const Card = (props) => {
-    return (
-        <div>
-          <img width="75" src= {props.avatar_url} />
-          <div style={{display: 'inline-block', marginLeft: 10}}>
-            <div style= {{fontSize: '1.5em', fontWeight: 'Bold'}}>{props.name}</div>
-            <div>{props.company}</div>
-          </div>
-        </div>
-    )
+  return (
+    <div>
+      <img width="75" src={props.avatar_url} />
+      <div style={{ display: 'inline-block', marginLeft: 10 }}>
+        <div style={{ fontSize: '1.5em', fontWeight: 'Bold' }}>{props.name}</div>
+        <div>{props.company}</div>
+      </div>
+    </div>
+  )
 }
 
 class Form extends React.Component {
-    render () {
-        return (
-            <form>
-                <input type="text" placeHolder="Github Username" />
-                <button type="submit">Add Card</button>
-            </form>
-        )
-    }
+  state = {
+    userName: ''
+  }
+  handleSubmit = (event) => {
+    event.preventDefault()
+    console.log(this.state.userName)
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input
+          type="text"
+          value={this.state.userName}
+          onChange={(event) => this.setState({ userName: event.target.value })}
+          refplaceHolder="Github Username"
+        />
+        <button type="submit">Add Card</button>
+      </form>
+    )
+  }
 }
 
 const CardList = (props) => {
-	return (
-  	<div>
-    	{props.cards.map(card => <Card {...card}/>)}
+  return (
+    <div>
+      {props.cards.map(card => <Card {...card} />)}
     </div>
   )
 }
 
 class App extends React.Component {
-	state = {
-  	cards : [
+  state = {
+    cards: [
       {
         name: "Oscar",
         avatar_url: "https://avatars0.githubusercontent.com/u/12476339?v=4",
@@ -45,15 +58,15 @@ class App extends React.Component {
 
     ]
   }
-	render() {
-  	return(
-    	<div>
-      	<Form />
-        <CardList cards={this.state.cards}/>
+  render() {
+    return (
+      <div>
+        <Form />
+        <CardList cards={this.state.cards} />
       </div>
     )
   }
 }
 
-ReactDOM.render(<App/>, mountNode)
+ReactDOM.render(<App />, mountNode)
 
